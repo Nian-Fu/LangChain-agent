@@ -1,0 +1,11 @@
+spring:
+  ai:
+    mcp:
+      server:
+        name: MCP-Server
+        version: 0.0.1
+        type: SYNC
+        # stdio
+        stdio: false
+  # stdio
+

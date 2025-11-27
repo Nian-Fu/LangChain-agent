@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: Agent
+  profiles:
+    active: local
+  ai:
+    dashscope:
+      api-key: sk-5f6c762ff1fe4a5ea4d89a30dde51912
+      chat:
+        options:
+          model: qwen-turbo
+
+
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,metrics,env,loggers # 暴露的端点
+    endpoint:
+      health:
+        show-details: always # 显示健康详情（如数据库连接状态）
+      shutdown:
+        enabled: true # 开启优雅关闭端点
+
+#    ollama:
+#      base-url: http://localhost:11434
+#      chat:
+#        model: deepseek-r1:7b
+#    mcp:
+#      client:
+#        sse:
+#          connections:
+#            server1:
+#              url: http://localhost:8127
+#          stdio:
+#            servers-configuration: classpath:mcp-servers.json
+
+#  datasource:
+#    url: jdbc:postgresql://rm-cn-6gt4byjj5000exqo.rwlb.rds.aliyuncs.com:5432/funian_agent
+#    username: my_user
+#    password: 091029@FN
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+##  # 临时注释掉，便于大家开发调试和部署（实际填写 PgVector 数据库信息）
+#    vectorstore:
+#      pgvector:
+#        index-type: HNSW
+#        dimensions: 1536
+#        istance-type: COSINE_DISTANCE
+#        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+
+  search-api:
+    api-key: oJQtz4cpK4QgbfjyGV7Vsw6g
+
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+  # springdoc-openapi????
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
+      tags-sorter: alpha
+      operations-sorter: alpha
+    api-docs:
+      path: /v3/api-docs
+    group-configs:
+      - group: 'default'
+        paths-to-match: '/**'
+        packages-to-scan: com.funian.agent.controller
+  # knife4j???????????????
+  knife4j:
+    enable: true
+    setting:
+      language: zh_cn
+  logging:
+    level:
+      org.springframework.ai: DEBUG
+
+#  logging:
+#    level:
+#      org.springframework.ai.chat.client.advisor.SpringAIClientAdvisor: debug

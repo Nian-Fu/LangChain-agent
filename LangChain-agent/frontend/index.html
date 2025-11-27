@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>携程式多智能体旅行平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-plane-departure"></i>
+                <h1>智能旅行助手</h1>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link active" data-tab="chat">
+                    <i class="fas fa-comments"></i> 智能助手
+                </a>
+                <a href="#" class="nav-link" data-tab="flight">
+                    <i class="fas fa-plane"></i> 机票查询
+                </a>
+                <a href="#" class="nav-link" data-tab="hotel">
+                    <i class="fas fa-hotel"></i> 酒店预订
+                </a>
+                <a href="#" class="nav-link" data-tab="attraction">
+                    <i class="fas fa-map-marked-alt"></i> 景点推荐
+                </a>
+                <a href="#" class="nav-link" data-tab="about">
+                    <i class="fas fa-info-circle"></i> 关于
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <div class="container">
+            <!-- 智能助手标签页 -->
+            <div id="chat-tab" class="tab-content active">
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <h3><i class="fas fa-history"></i> 历史记录</h3>
+                        <div id="chat-history" class="chat-history">
+                            <!-- 历史记录将动态添加 -->
+                        </div>
+                        <button id="new-chat-btn" class="btn btn-secondary">
+                            <i class="fas fa-plus"></i> 新对话
+                        </button>
+                    </div>
+                    
+                    <div class="chat-main">
+                        <div class="welcome-message" id="welcome-message">
+                            <i class="fas fa-robot"></i>
+                            <h2>您好！我是智能旅行助手</h2>
+                            <p>我可以帮您：</p>
+                            <div class="quick-actions">
+                                <button class="quick-btn" data-query="查询12月1日从北京到上海的机票">
+                                    <i class="fas fa-plane"></i> 查询机票
+                                </button>
+                                <button class="quick-btn" data-query="推荐上海的五星级酒店">
+                                    <i class="fas fa-hotel"></i> 酒店推荐
+                                </button>
+                                <button class="quick-btn" data-query="推荐杭州的景点">
+                                    <i class="fas fa-map-marked-alt"></i> 景点推荐
+                                </button>
+                                <button class="quick-btn" data-query="帮我规划一个3天的成都之旅">
+                                    <i class="fas fa-calendar-alt"></i> 行程规划
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="chat-messages" class="chat-messages">
+                            <!-- 消息将动态添加 -->
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <textarea 
+                                id="chat-input" 
+                                class="chat-input" 
+                                placeholder="请输入您的需求，例如：我想查询12月1日从北京到上海的机票..."
+                                rows="3"
+                            ></textarea>
+                            <button id="send-btn" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> 发送
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 机票查询标签页 -->
+            <div id="flight-tab" class="tab-content">
+                <div class="form-container">
+                    <h2><i class="fas fa-plane"></i> 机票查询</h2>
+                    <form id="flight-form" class="search-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> 出发地</label>
+                                <input type="text" id="departure" placeholder="如：北京" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> 目的地</label>
+                                <input type="text" id="destination" placeholder="如：上海" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> 出发日期</label>
+                                <input type="date" id="departure-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> 乘客数量</label>
+                                <input type="number" id="passengers" value="1" min="1" max="9">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-search"></i> 搜索航班
+                        </button>
+                    </form>
+                    <div id="flight-results" class="results-container">
+                        <!-- 结果将动态添加 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 酒店查询标签页 -->
+            <div id="hotel-tab" class="tab-content">
+                <div class="form-container">
+                    <h2><i class="fas fa-hotel"></i> 酒店查询</h2>
+                    <form id="hotel-form" class="search-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> 目的地</label>
+                                <input type="text" id="hotel-destination" placeholder="如：上海" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-money-bill"></i> 预算（元/晚）</label>
+                                <input type="number" id="budget" placeholder="如：500" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-star"></i> 偏好（多选）</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="市中心"> 市中心</label>
+                                <label><input type="checkbox" value="地铁"> 地铁站附近</label>
+                                <label><input type="checkbox" value="游泳池"> 游泳池</label>
+                                <label><input type="checkbox" value="健身房"> 健身房</label>
+                                <label><input type="checkbox" value="停车场"> 停车场</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-search"></i> 搜索酒店
+                        </button>
+                    </form>
+                    <div id="hotel-results" class="results-container">
+                        <!-- 结果将动态添加 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 景点推荐标签页 -->
+            <div id="attraction-tab" class="tab-content">
+                <div class="form-container">
+                    <h2><i class="fas fa-map-marked-alt"></i> 景点推荐</h2>
+                    <form id="attraction-form" class="search-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> 目的地</label>
+                                <input type="text" id="attraction-destination" placeholder="如：杭州" required>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar-day"></i> 旅行天数</label>
+                                <input type="number" id="days" value="3" min="1" max="30">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-heart"></i> 兴趣偏好（多选）</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="历史文化"> 历史文化</label>
+                                <label><input type="checkbox" value="自然风光"> 自然风光</label>
+                                <label><input type="checkbox" value="主题乐园"> 主题乐园</label>
+                                <label><input type="checkbox" value="美食"> 美食</label>
+                                <label><input type="checkbox" value="购物"> 购物</label>
+                                <label><input type="checkbox" value="博物馆"> 博物馆</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-search"></i> 推荐景点
+                        </button>
+                    </form>
+                    <div id="attraction-results" class="results-container">
+                        <!-- 结果将动态添加 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 关于标签页 -->
+            <div id="about-tab" class="tab-content">
+                <div class="about-container">
+                    <h2><i class="fas fa-info-circle"></i> 关于系统</h2>
+                    <div class="about-content">
+                        <div class="about-section">
+                            <h3>系统介绍</h3>
+                            <p>携程式多智能体旅行平台是一个基于人工智能的智能旅行服务平台，整合了8个专业化智能体，为用户提供全方位的旅行服务。</p>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>核心功能</h3>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> 智能意图识别 - 自动理解用户需求</li>
+                                <li><i class="fas fa-check"></i> 机票查询比价 - 多航班选择与建议</li>
+                                <li><i class="fas fa-check"></i> 酒店智能推荐 - 基于预算和偏好</li>
+                                <li><i class="fas fa-check"></i> 景点个性推荐 - 匹配兴趣偏好</li>
+                                <li><i class="fas fa-check"></i> 行程智能规划 - 完整的旅行方案</li>
+                                <li><i class="fas fa-check"></i> 价格对比分析 - 多平台比价</li>
+                                <li><i class="fas fa-check"></i> 在线预订服务 - 快速下单</li>
+                                <li><i class="fas fa-check"></i> 客服智能咨询 - 24/7在线服务</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>技术架构</h3>
+                            <div class="tech-stack">
+                                <span class="tech-tag">LangChain</span>
+                                <span class="tech-tag">LangGraph</span>
+                                <span class="tech-tag">FastAPI</span>
+                                <span class="tech-tag">通义千问</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">SQLite</span>
+                            </div>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>API状态</h3>
+                            <div id="api-status" class="api-status">
+                                <i class="fas fa-spinner fa-spin"></i> 检查中...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 携程式多智能体旅行平台 | Powered by LangChain & LangGraph</p>
+        </div>
+    </footer>
+
+    <!-- 加载提示 -->
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>正在处理您的请求...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
